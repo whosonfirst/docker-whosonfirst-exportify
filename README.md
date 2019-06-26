@@ -17,3 +17,17 @@ This is not ready for you to use yet.
 * Updating the `Dockerfile` to expose the Flask app on port `xxxx`.
 
 * Figure out the how and what of getting Alpine to install geo dependencies from `apk`. Currently we are building `libgeos`, `libgdal` and `libproj` from source so that takes... a while.
+
+## Usage
+
+First build an image with all the geo stuff compiled from source. We do this as a separate step because it takes so damn long (see above). Ultimately the goal is to make `Dockerfile.geo` go away.
+
+```
+docker build -f Dockerfile.geo -t whosonfirst-exportify-geo .
+```
+
+Now build the Who's On First "exportify" stuff. Note that we are assuming the presence of a `whosonfirst-exportify-geo` image (see above) rather than `alpine:latest`.
+
+``
+docker build -f Dockerfile -t whosonfirst-exportify .
+```
