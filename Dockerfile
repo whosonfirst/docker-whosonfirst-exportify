@@ -6,6 +6,7 @@ ARG PYMZWOF_EXPORT_VERSION=0.9.6
 
 RUN apk update && apk upgrade \
     && apk add coreutils git make ca-certificates py-pip \
+    && mkdir /build \    
     #
     # Something to note here is that the URLs for py-mapzen-whosonfirst-utils and py-mapzen-whosonfirst-export
     # are subtlely different. Specifically the latter uses the `vX.Y.Z` convention for releases and the former

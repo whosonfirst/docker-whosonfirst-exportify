@@ -31,3 +31,22 @@ Now build the Who's On First "exportify" stuff. Note that we are assuming the pr
 ``
 docker build -f Dockerfile -t whosonfirst-exportify .
 ```
+
+And then:
+
+```
+docker run whosonfirst-exportify /usr/bin/wof-exportify -h
+Usage: wof-exportify [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -s SOURCE, --source=SOURCE
+  -i ID, --id=ID        
+  -p PATH, --path=PATH  
+  -c, --collection      
+  -a ALT, --alt=ALT     
+  -d DISPLAY, --display=DISPLAY
+  --stdin               
+  --debug               
+  -v, --verbose         Be chatty (default is false)
+```  
