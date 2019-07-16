@@ -2,7 +2,7 @@
 FROM whosonfirst-exportify-geo
 
 ARG PYMZWOF_UTILS_VERSION=0.4.5
-ARG PYMZWOF_EXPORT_VERSION=0.9.6
+ARG PYMZWOF_EXPORT_VERSION=0.10.0
 
 RUN apk update && apk upgrade \
     && apk add coreutils git make ca-certificates py-pip \

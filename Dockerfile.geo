@@ -5,7 +5,7 @@ FROM alpine:latest
 # https://download.osgeo.org/gdal/
 
 ARG LIBGEOS_VERSION=3.7.2
-ARG LIBGDAL_VERSION=3.0.0
+ARG LIBGDAL_VERSION=3.0.1
 ARG LIBPROJ_VERSION=6.1.0
 
 RUN apk update && apk upgrade \
