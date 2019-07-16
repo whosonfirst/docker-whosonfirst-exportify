@@ -27,14 +27,16 @@ RUN apk update && apk upgrade \
     #
     && cd /build \
     && wget https://download.osgeo.org/proj/proj-${LIBPROJ_VERSION}.tar.gz && tar -xvzf proj-${LIBPROJ_VERSION}.tar.gz \
+    && wget https://download.osgeo.org/geos/geos-${LIBGEOS_VERSION}.tar.bz2 && tar -xvjf geos-${LIBGEOS_VERSION}.tar.bz2 \
+    && wget https://download.osgeo.org/gdal/${LIBGDAL_VERSION}/gdal-${LIBGDAL_VERSION}.tar.gz && tar -xvzf gdal-${LIBGDAL_VERSION}.tar.gz \
+    #
+    && cd /build \
     && cd proj-${LIBPROJ_VERSION} && ./configure && make && make install \
     #
     && cd /build \
-    && wget https://download.osgeo.org/geos/geos-${LIBGEOS_VERSION}.tar.bz2 && tar -xvjf geos-${LIBGEOS_VERSION}.tar.bz2 \
     && cd geos-${LIBGEOS_VERSION} && ./configure && make && make install \
     #
     && cd /build \
-    && wget https://download.osgeo.org/gdal/${LIBGDAL_VERSION}/gdal-${LIBGDAL_VERSION}.tar.gz && tar -xvzf gdal-${LIBGDAL_VERSION}.tar.gz \
     && cd gdal-${LIBGDAL_VERSION} && ./configure && make && make install \
     #       
     && pip install gdal \
