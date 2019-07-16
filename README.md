@@ -28,7 +28,7 @@ docker build -f Dockerfile.geo -t whosonfirst-exportify-geo .
 
 Now build the Who's On First "exportify" stuff. Note that we are assuming the presence of a `whosonfirst-exportify-geo` image (see above) rather than `alpine:latest`.
 
-``
+```
 docker build -f Dockerfile -t whosonfirst-exportify .
 ```
 
@@ -49,4 +49,4 @@ Options:
   --stdin               
   --debug               
   -v, --verbose         Be chatty (default is false)
-```  
+```
