@@ -64,7 +64,7 @@ $> curl -s -X POST -H "Content-Type: application/json" -d @101736545.geojson 127
 #### wof-exportify-www (with gunicorn)
 
 ```
-docker run -it -p 7777:7777 whosonfirst-exportify gunicorn --chdir /usr/local/bin --bind 0.0.0.0:7777 --worker-class=gevent --workers 4 wof-exportify-www:app
+$> docker run -it -p 7777:7777 whosonfirst-exportify gunicorn --chdir /usr/local/bin --bind 0.0.0.0:7777 --worker-class=gevent --workers 4 wof-exportify-www:app
 [2019-07-17 16:20:46 +0000] [1] [INFO] Starting gunicorn 19.7.1
 [2019-07-17 16:20:46 +0000] [1] [INFO] Listening at: http://0.0.0.0:7777 (1)
 [2019-07-17 16:20:46 +0000] [1] [INFO] Using worker: gevent
