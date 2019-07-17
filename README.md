@@ -2,14 +2,10 @@
 
 "Exportify as a service"
 
-## Important
-
-This is work in progress.
-
 ## Setup
 
 ```
-docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
+$> docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
 ```
 
 I tried to get all this working under `alpine` but there appears to be a number of problems installing GDAL related tools. Any help would be appreciated.
@@ -19,7 +15,7 @@ I tried to get all this working under `alpine` but there appears to be a number 
 ### wof-exportify
 
 ```
-docker run whosonfirst-exportify /usr/local/bin/wof-exportify -h
+$> docker run whosonfirst-exportify /usr/local/bin/wof-exportify -h
 Usage: wof-exportify [options]
 
 Options:
@@ -39,7 +35,7 @@ Options:
 For example:
 
 ```
-cat 101736545.geojson | docker run -i whosonfirst-exportify /usr/local/bin/wof-exportify -e stdout --stdin | jq '.properties["wof:name"]'
+$> cat 101736545.geojson | docker run -i whosonfirst-exportify /usr/local/bin/wof-exportify -e stdout --stdin | jq '.properties["wof:name"]'
 "Montreal"
 ```
 
