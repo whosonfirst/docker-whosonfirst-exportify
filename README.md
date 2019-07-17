@@ -1,6 +1,6 @@
 # docker-whosonfirst-exportify
 
-"Exportify as a service"
+"Exportify" Who's On First documents, as a service.
 
 ## Setup
 
