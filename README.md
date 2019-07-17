@@ -77,7 +77,7 @@ docker run -it -p 7777:7777 whosonfirst-exportify gunicorn --chdir /usr/local/bi
 For example:
 
 ```
-$> curl -s -X POST -H "Content-Type: application/json" -d @/Users/asc/Downloads/101736545.geojson 127.0.0.1:7777 | jq '.properties["wof:name"]'
+$> curl -s -X POST -H "Content-Type: application/json" -d @101736545.geojson 127.0.0.1:7777 | jq '.properties["wof:name"]'
 "Montreal"
 ```
 
