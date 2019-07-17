@@ -28,10 +28,14 @@ RUN apt-get update && apt-get dist-upgrade -y \
     && cd py-mapzen-whosonfirst-export-${PY_WOF_EXPORT_VERSION} \
     && pip install -r requirements.txt . \
     #
+    # wof-exportify-www.py is required by gunicorn
+    # wof-exportify-www is for everyone else...
+    #
     && cd /build \    
     && wget -O exportify.tar.gz https://github.com/whosonfirst/whosonfirst-www-exportify/archive/v${WWW_WOF_EXPORTIFY_VERSION}.tar.gz && tar -xvzf exportify.tar.gz \
     && cd whosonfirst-www-exportify-${WWW_WOF_EXPORTIFY_VERSION} \
     && pip install -r requirements.txt \
-    && cp www/server.py /usr/local/bin/wof-exportify-www  \
+    && cp www/server.py /usr/local/bin/wof-exportify-www.py  \
+    && ln -s /usr/local/bin/wof-exportify-www.py /usr/local/bin/wof-exportify-www \
     #
     && cd / && rm -rf /build

@@ -65,7 +65,25 @@ $> curl -s -X POST -H "Content-Type: application/json" -d @101736545.geojson 127
 "Montreal"
 ```
 
-The details surrounding the use of `wof-exportify-www` may change in order to run it under `gunicorn` but that remains to be determined.
+#### wof-exportify-www (with gunicorn)
+
+```
+docker run -it -p 7777:7777 whosonfirst-exportify gunicorn --chdir /usr/local/bin --bind 0.0.0.0:7777 --worker-class=gevent --workers 4 wof-exportify-www:app
+[2019-07-17 16:20:46 +0000] [1] [INFO] Starting gunicorn 19.7.1
+[2019-07-17 16:20:46 +0000] [1] [INFO] Listening at: http://0.0.0.0:7777 (1)
+[2019-07-17 16:20:46 +0000] [1] [INFO] Using worker: gevent
+[2019-07-17 16:20:46 +0000] [10] [INFO] Booting worker with pid: 10
+[2019-07-17 16:20:46 +0000] [12] [INFO] Booting worker with pid: 12
+[2019-07-17 16:20:47 +0000] [14] [INFO] Booting worker with pid: 14
+[2019-07-17 16:20:47 +0000] [16] [INFO] Booting worker with pid: 16
+```
+
+For example:
+
+```
+$> curl -s -X POST -H "Content-Type: application/json" -d @/Users/asc/Downloads/101736545.geojson 127.0.0.1:7777 | jq '.properties["wof:name"]'
+"Montreal"
+```
 
 ## See also
 
