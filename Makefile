@@ -3,9 +3,6 @@
 docker:
 	@make docker-ubuntu
 
-docker-alpine:
-	docker build -f Dockerfile.alpine -t whosonfirst-exportify .
-
 docker-ubuntu:
 	docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
 

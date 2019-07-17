@@ -1,12 +1,14 @@
 FROM ubuntu
 
-ARG PYMZWOF_UTILS_VERSION=0.4.5
-ARG PYMZWOF_EXPORT_VERSION=0.10.1
+ARG PY_WOF_UTILS_VERSION=0.4.5
+ARG PY_WOF_EXPORT_VERSION=0.10.3
+ARG WWW_WOF_EXPORTIFY_VERSION=0.0.3
 
 RUN apt-get update && apt-get dist-upgrade -y \
     #
     && apt-get install -y coreutils git make ca-certificates python-pip wget \
     && apt-get install -y libgdal-dev libgeos-dev libproj-dev python-gdal \
+    && apt-get install -y gunicorn python-gevent \
     # 
     && mkdir /build \    
     #
@@ -17,13 +19,19 @@ RUN apt-get update && apt-get dist-upgrade -y \
     # but today I did not... (20190626/thisisaaronland)
     #
     && cd /build \
-    && wget -O utils.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-utils/archive/${PYMZWOF_UTILS_VERSION}.tar.gz && tar -xvzf utils.tar.gz \
-    && cd py-mapzen-whosonfirst-utils-${PYMZWOF_UTILS_VERSION} \
+    && wget -O utils.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-utils/archive/${PY_WOF_UTILS_VERSION}.tar.gz && tar -xvzf utils.tar.gz \
+    && cd py-mapzen-whosonfirst-utils-${PY_WOF_UTILS_VERSION} \
     && pip install -r requirements.txt . \
     #
     && cd /build \    
-    && wget -O export.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-export/archive/v${PYMZWOF_EXPORT_VERSION}.tar.gz && tar -xvzf export.tar.gz \
-    && cd py-mapzen-whosonfirst-export-${PYMZWOF_EXPORT_VERSION} \
+    && wget -O export.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-export/archive/v${PY_WOF_EXPORT_VERSION}.tar.gz && tar -xvzf export.tar.gz \
+    && cd py-mapzen-whosonfirst-export-${PY_WOF_EXPORT_VERSION} \
     && pip install -r requirements.txt . \
+    #
+    && cd /build \    
+    && wget -O exportify.tar.gz https://github.com/whosonfirst/whosonfirst-www-exportify/archive/v${WWW_WOF_EXPORTIFY_VERSION}.tar.gz && tar -xvzf exportify.tar.gz \
+    && cd whosonfirst-www-exportify-${WWW_WOF_EXPORTIFY_VERSION} \
+    && pip install -r requirements.txt \
+    && cp www/server.py /usr/local/bin/wof-exportify-www  \
     #
     && cd / && rm -rf /build
