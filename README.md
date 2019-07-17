@@ -10,7 +10,7 @@ This is work in progress.
 docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
 ```
 
-There is a `Docker.alpine` Dockerfile but it does not build as of this writing. Any help would be appreciated.
+There is also a `Dockerfile.alpine` Dockerfile but it does not build as of this writing. Any help would be appreciated.
 
 ## Usage
 
