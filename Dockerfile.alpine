@@ -1,11 +1,23 @@
-# FROM alpine:latest
-FROM whosonfirst-exportify-geo
+FROM alpine
 
 ARG PYMZWOF_UTILS_VERSION=0.4.5
-ARG PYMZWOF_EXPORT_VERSION=0.10.0
+ARG PYMZWOF_EXPORT_VERSION=0.10.1
+
+# https://stackoverflow.com/questions/56099491/gdal-installation-in-alpine-compilation-failure-error-command-gcc-failed-w
+# https://pkgs.alpinelinux.org/packages?name=gdal&branch=edge
 
 RUN apk update && apk upgrade \
-    && apk add coreutils git make ca-certificates py-pip \
+    && apk add coreutils git make ca-certificates py-pip wget \
+    && apk add libc-dev gcc g++ linux-headers python-dev sqlite sqlite-dev \  
+    #
+    && apk add --no-cache --virtual .build-deps-edge \
+       --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+       --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    && apk update \
+    #
+    && apk add gdal-dev geos-dev proj4-dev \
+    && pip install 'gdal==2.4.0' \
+    #
     && mkdir /build \    
     #
     # Something to note here is that the URLs for py-mapzen-whosonfirst-utils and py-mapzen-whosonfirst-export
