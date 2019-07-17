@@ -38,3 +38,9 @@ For example:
 cat 101736545.geojson | docker run -i whosonfirst-exportify /usr/local/bin/wof-exportify -e stdout --stdin | jq '.properties["wof:name"]'
 "Montreal"
 ```
+
+Note the `-i` flag which is important if you're trying to pipe documents in to the container.
+
+## See also
+
+* https://github.com/whosonfirst/py-mapzen-whosonfirst-export
