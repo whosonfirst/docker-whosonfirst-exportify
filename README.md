@@ -193,7 +193,7 @@ The step continues to baffle me. The basics are:
 | --- | --- |
 | Launch type | `FARGATE` |
 | Task Definition (family) | `whosonfirst-exportify` | 
-| Revision | (whatever revision of the `whosonfirst-exportify` task definition | you want to use) | 
+| Revision | (whatever revision of the `whosonfirst-exportify` task definition you want to use) | 
 | Service name |  `whosonfirst-exportify` | 
 | Number of tasks | 1 (or to taste) |
 
