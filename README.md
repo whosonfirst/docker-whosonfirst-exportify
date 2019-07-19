@@ -177,7 +177,9 @@ Choose the relevant container and under `Environment, Command` add:
 gunicorn,--chdir,/usr/local/bin,--bind,0.0.0.0:8080,--worker-class=gevent,--workers,4,wof-exportify-www:app_with_max_content_length(1048576)
 ```
 
-Adjust the value in `wof-exportify-www:app_with_max_content_length(...)` to taste.
+Adjust the value in `wof-exportify-www:app_with_max_content_length(...)` to
+taste. Remember all these paths (in the `Command` statement) are defined in or
+by the [docker-whosonfirst-exportify](https://github.com/whosonfirst/docker-whosonfirst-exportify) container.
 
 ### Cluster
 
