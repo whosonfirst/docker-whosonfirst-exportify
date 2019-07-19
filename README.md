@@ -185,15 +185,15 @@ Use an exsiting ECS cluster or create a new one called `whosonfirst-exportify`
 
 ### Service
 
-The step continues to baffle me.
+The step continues to baffle me. The basics are:
 
 | Property | Value |
 | --- | --- |
 | Launch type | `FARGATE` |
 | Task Definition (family) | `whosonfirst-exportify` | 
-| Revision | `xx (latest)` | 
+| Revision | (whatever revision of the `whosonfirst-exportify` task definition | you want to use) | 
 | Service name |  `whosonfirst-exportify` | 
-| Number of tasks | 1 |
+| Number of tasks | 1 (or to taste) |
 
 #### Networking
 
@@ -211,10 +211,10 @@ Configure your VPC and subnets as desired.
 | Load balancer type | Application load balancer |
 | Load balancer name | `whosonfirst-exportify-elb` |
 
-Under "Container to load balance" choose `whosonfirst-exportify:8080:8080`
-(there shouldn't be any other, then "Add container".
+Under "Container to load balance" choose `whosonfirst-exportify:8080:8080` then "Add container".
 
-Now we get to the "Container to load balance" part of things.
+Now we get to the "Container to load balance" part of things which is where
+things get confusing again.
 
 | Property | Value |
 | --- | --- |
@@ -236,9 +236,19 @@ So far as I can tell you'll have one or two options here:
    create a target group with similar settings in the EC2 console it _won't_ be
    present. I have no idea why...
 
+To make matters even more confusing the auto-generated target group will specify
+port `80` (instead of port `8080`) for the load balancer
+(`whosonfirst-exportify-elb`) to route requests to but... for some reason that
+doesn't matter and traffic is happily sent to the right place.
+
 #### Service discovery 
 
 Disable the `Enable service discovery integration` checkbox.
+
+### Finishing up
+
+At this point you can pretty much just use the defaults, clicking "okay" along
+the way and everything _should_ just work. Until it doesn't I guess.
 
 ## See also
 
