@@ -2,6 +2,23 @@
 
 "Exportify" Who's On First documents, as a service.
 
+## Description
+
+This container image exports tools and services for "exportifying" Who's On
+First (WOF) GeoJSON documents, making them ready to be included in a
+commit or pull request in a [https://github.com/whosonfirst-data](whosonfirst-data) repository.
+
+When a WOF record is "exportified" a number of derived properties are
+automatically updated (for example `wof:belongsto`, `src:geom_hash` and
+`wof:lastmodified`) and the document is formatted according to the WOF style
+guide (specifically that GeoJSON properties but _not_ geometries be indented).
+
+All of this logic is handled by the
+[py-mapzen-whosonfirst-export](https://github.com/whosonfirst/py-mapzen-whosonfirst-export)
+library and is made available through the `wof-exportify` command line tool and
+the `wof-exportify-www` server (which is part of the
+[whosonfirst-www-exportify](https://github.com/whosonfirst/whosonfirst-www-exportify) package.
+
 ## Setup
 
 ```
