@@ -102,19 +102,143 @@ $> curl -s -X POST -H "Content-Type: application/json" -d @101736545.geojson 127
 
 Running `docker-whosonfirst-exportify` using the AWS Elastic Container Service (ECS)
 
-### Repository
+### Security Group(s)
 
-### Task definition
+Let's imagine that you're going to set up a ELB (specifically an application
+load balancer) to listen on port `443` and relay traffic to the ECS container on
+port `8080`.
 
-### Cluster
+The details of setting up TLS certificates for the ELB are outside the scope of this discussion.
 
-### Service
+#### whosonfirst-exportify-elb
+
+Allow in-bound traffic on port `443`.
+
+#### whosonfirst-exportify-ecs
+
+Allow in-bound traffic on port `8080`.
 
 ### Elastic Load Balancer
 
-### Target Group
+Create a new application load balancer called `whosonfirst-exportify-elb.
 
-### Security Group(s)
+Assign the `whosonfirst-exportify-elb` security group to it.
+
+#### Target Groups
+
+This is the part I totally don't understand. In order to create the ELB you
+have to create a target group. But then later, when you're setting up the (ECS)
+service it will create some sort of "magic" target group that will add/remove
+your (ECS) tasks as they are spun up or down.
+
+So, just create any old target group and assume you'll delete it later...
+
+If you could create a target group you'd do something like this:
+
+| Property | Value |
+| --- | --- | 
+| Target group name | `whosonfirst-exportify-target` |
+| Target type | IP |
+| Protocol | HTTP | 
+| Port | 8080 | 
+| VPC | ... |
+
+For the health check:
+
+| Property | Value |
+| --- | --- | 
+| Protocol | HTTP | 
+| Path | `/ping` | 
+
+
+### Repository (containers)
+
+Generally I try to make sure containers get tagged with the same release number as [whosonfirst-www-exportify](https://github.com/whosonfirst/whosonfirst-www-exportify)
+
+### Task definition
+
+#### Task definition name
+
+Something like `whosonfirst-exportify`.
+
+#### Requires compatibilities
+
+Make sure to check `FARGATE`.
+
+#### Task role
+
+Just use the default `ecsTaskExecutionRole`.
+
+#### Container Definitions 
+
+Choose the relevant container and under `Environment, Command` add:
+
+```
+gunicorn,--chdir,/usr/local/bin,--bind,0.0.0.0:8080,--worker-class=gevent,--workers,4,wof-exportify-www:app_with_max_content_length(1048576)
+```
+
+Adjust the value in `wof-exportify-www:app_with_max_content_length(...)` to taste.
+
+### Cluster
+
+Use an exsiting ECS cluster or create a new one called `whosonfirst-exportify`
+
+### Service
+
+The step continues to baffle me.
+
+| Property | Value |
+| --- | --- |
+| Launch type | `FARGATE` |
+| Task Definition (family) | `whosonfirst-exportify` | 
+| Revision | `xx (latest)` | 
+| Service name |  `whosonfirst-exportify` | 
+| Number of tasks | 1 |
+
+#### Networking
+
+Configure your VPC and subnets as desired.
+
+| Property | Value |
+| --- | --- | 
+| Security groups | `whosonfirst-exportify-ecs` |
+| Auto-assign public IP | ENABLED | 
+
+#### Load balancing
+
+| Property | Value |
+| --- | --- |
+| Load balancer type | Application load balancer |
+| Load balancer name | `whosonfirst-exportify-elb` |
+
+Under "Container to load balance" choose `whosonfirst-exportify:8080:8080`
+(there shouldn't be any other, then "Add container".
+
+Now we get to the "Container to load balance" part of things.
+
+| Property | Value |
+| --- | --- |
+| Production listener port* | `443:HTTPS` |
+| Target group name | (see notes below) |
+| Target group protocol | HTTP | 
+| Target type | ip | 
+| Path pattern | `/` |
+| Evaluation order | 1 | 
+| Health check path  | `/ping` |
+
+Notes about `Target group name`:
+
+So far as I can tell you'll have one or two options here:
+
+1. Create a new target group
+2. If you've already created this service and by extension its target group
+   before then it (the target group) will be an option to choose. If you just
+   create a target group with similar settings in the EC2 console it _won't_ be
+   present. I have no idea why...
+
+#### Service discovery 
+
+Disable the `Enable service discovery integration` checkbox.
 
 ## See also
 
