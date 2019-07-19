@@ -213,10 +213,11 @@ Configure your VPC and subnets as desired.
 | Load balancer type | Application load balancer |
 | Load balancer name | `whosonfirst-exportify-elb` |
 
-Under "Container to load balance" choose `whosonfirst-exportify:8080:8080` then "Add container".
+Under "Container to load balance" choose `whosonfirst-exportify:8080:8080` then
+"Add container". Now we get to the "Container to load balance" part of things which is where
+things get confusing again. 
 
-Now we get to the "Container to load balance" part of things which is where
-things get confusing again.
+In the end you want something like this:
 
 | Property | Value |
 | --- | --- |
