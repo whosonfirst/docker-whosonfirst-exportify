@@ -242,7 +242,7 @@ So far as I can tell you'll have one or two options here:
 To make matters even more confusing the auto-generated target group will specify
 port `80` (instead of port `8080`) for the load balancer
 (`whosonfirst-exportify-elb`) to route requests to but... for some reason that
-doesn't matter and traffic is happily sent to the right place.
+doesn't matter and traffic is happily sent to the right place. Because... magic?
 
 #### Service discovery 
 
