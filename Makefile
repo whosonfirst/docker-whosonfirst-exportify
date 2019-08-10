@@ -1,7 +1,7 @@
 # --no-cache=true if you need to force things
 
 docker:
-	@make docker-ubuntu
+	docker build -t whosonfirst-exportify .
 
 docker-ubuntu:
 	docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
