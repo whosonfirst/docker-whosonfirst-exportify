@@ -3,12 +3,6 @@
 docker:
 	docker build -t whosonfirst-exportify .
 
-docker-ubuntu:
-	docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
-
-docker-geo:
-	docker build -f Dockerfile.geo -t whosonfirst-exportify-geo .
-
 flask-server:
 	docker run -it -p 7777:7777 whosonfirst-exportify /usr/local/bin/wof-exportify-www --host 0.0.0.0
 
