@@ -22,10 +22,8 @@ the `wof-exportify-www` server (which is part of the
 ## Setup
 
 ```
-$> docker build -f Dockerfile.ubuntu -t whosonfirst-exportify .
+$> docker build -t whosonfirst-exportify .
 ```
-
-I tried to get all this working under `alpine` but there appears to be a number of problems installing GDAL related tools. Any help would be appreciated.
 
 ## Usage
 
