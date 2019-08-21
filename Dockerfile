@@ -18,10 +18,11 @@ ARG PY_WOF_EXPORT_VERSION=0.10.3
 ARG WWW_WOF_EXPORTIFY_VERSION=0.0.7
 
 RUN apk update && apk upgrade \
-    && apk add git gcc libc-dev python-dev ca-certificates py-pip wget \
+    && apk add git gcc libc-dev python-dev ca-certificates py-pip wget build-base \
     #
     && pip install gevent \
     && pip install gunicorn \
+    && pip install pygdal=="`gdal-config --version`.*" \
     #
     && mkdir /build \    
     #
