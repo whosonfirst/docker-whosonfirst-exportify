@@ -6,7 +6,7 @@ RUN echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repo
 RUN echo "@edge-testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
-  apk --no-cache --update upgrade  && \  
+  apk --no-cache --update upgrade  && \
   apk add --upgrade --force-overwrite apk-tools@edge && \
   apk add --update --force-overwrite "proj-dev@edge-testing" "geos-dev@edge-testing" "gdal-dev@edge-testing" "gdal@edge-testing" && \
   rm -rf /var/cache/apk/*
@@ -24,7 +24,7 @@ RUN apk update && apk upgrade \
     && pip install gunicorn \
     && pip install pygdal=="`gdal-config --version`.*" \
     #
-    && mkdir /build \    
+    && mkdir /build \
     #
     # Something to note here is that the URLs for py-mapzen-whosonfirst-utils and py-mapzen-whosonfirst-export
     # are subtlely different. Specifically the latter uses the `vX.Y.Z` convention for releases and the former
@@ -36,16 +36,18 @@ RUN apk update && apk upgrade \
     && wget -O utils.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-utils/archive/${PY_WOF_UTILS_VERSION}.tar.gz && tar -xvzf utils.tar.gz \
     && cd py-mapzen-whosonfirst-utils-${PY_WOF_UTILS_VERSION} \
     && pip install -r requirements.txt . \
+    && cp -r scripts/. /usr/local/bin/ \
     #
-    && cd /build \    
+    && cd /build \
     && wget -O export.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-export/archive/v${PY_WOF_EXPORT_VERSION}.tar.gz && tar -xvzf export.tar.gz \
     && cd py-mapzen-whosonfirst-export-${PY_WOF_EXPORT_VERSION} \
     && pip install -r requirements.txt . \
+    && cp -r scripts/. /usr/local/bin/ \
     #
     # wof-exportify-www.py is required by gunicorn
     # wof-exportify-www is for everyone else...
     #
-    && cd /build \    
+    && cd /build \
     && wget -O exportify.tar.gz https://github.com/whosonfirst/whosonfirst-www-exportify/archive/v${WWW_WOF_EXPORTIFY_VERSION}.tar.gz && tar -xvzf exportify.tar.gz \
     && cd whosonfirst-www-exportify-${WWW_WOF_EXPORTIFY_VERSION} \
     && pip install -r requirements.txt \
