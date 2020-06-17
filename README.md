@@ -50,7 +50,7 @@ Options:
 For example:
 
 ```
-$> cat 101736545.geojson | docker run -i whosonfirst-exportify /usr/local/bin/wof-exportify -e stdout --stdin | jq '.properties["wof:name"]'
+$> cat fixtures/101736545.geojson | docker run -i whosonfirst-exportify /usr/local/bin/wof-exportify -e stdout --stdin | jq '.properties["wof:name"]'
 "Montreal"
 ```
 
@@ -72,7 +72,7 @@ INFO:werkzeug:172.17.0.1 - - [17/Jul/2019 16:00:53] "POST / HTTP/1.1" 200 -
 For example:
 
 ```
-$> curl -s -X POST -H "Content-Type: application/json" -d @101736545.geojson 127.0.0.1:7777 | jq '.properties["wof:name"]'
+$> curl -s -X POST -H "Content-Type: application/json" -d @fixtures/101736545.geojson 127.0.0.1:7777 | jq '.properties["wof:name"]'
 "Montreal"
 ```
 
