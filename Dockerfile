@@ -1,28 +1,17 @@
 # first build all the gdal/libgeos stuff
 
-FROM alpine:3.7 AS geo
+FROM osgeo/gdal:alpine-ultrasmall-latest
 
-RUN echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-RUN echo "@edge-testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-
-RUN apk update && \
-  apk --no-cache --update upgrade  && \
-  apk add --upgrade --force-overwrite apk-tools@edge && \
-  apk add --update --force-overwrite "proj-dev@edge-testing" "geos-dev@edge-testing" "gdal-dev@edge-testing" "gdal@edge-testing" && \
-  rm -rf /var/cache/apk/*
-
-FROM geo
-
-ARG PY_WOF_UTILS_VERSION=0.4.5
-ARG PY_WOF_EXPORT_VERSION=0.10.3
+ARG PY_WOF_UTILS_VERSION=1.0.0
+ARG PY_WOF_EXPORT_VERSION=1.0.0
 ARG WWW_WOF_EXPORTIFY_VERSION=0.0.7
 
 RUN apk update && apk upgrade \
-    && apk add git gcc libc-dev python-dev ca-certificates py-pip wget build-base \
+    && apk add git gcc libc-dev python3-dev ca-certificates py3-pip wget build-base \
     #
-    && pip install gevent \
-    && pip install gunicorn \
-    && pip install pygdal=="`gdal-config --version`.*" \
+    && pip3 install gevent \
+    && pip3 install gunicorn \
+    && pip3 install pygdal=="`gdal-config --version`.*" \
     #
     && mkdir /build \
     #
@@ -35,13 +24,13 @@ RUN apk update && apk upgrade \
     && cd /build \
     && wget -O utils.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-utils/archive/${PY_WOF_UTILS_VERSION}.tar.gz && tar -xvzf utils.tar.gz \
     && cd py-mapzen-whosonfirst-utils-${PY_WOF_UTILS_VERSION} \
-    && pip install -r requirements.txt . \
+    && pip3 install -r requirements.txt . \
     && cp -r scripts/. /usr/local/bin/ \
     #
     && cd /build \
     && wget -O export.tar.gz https://github.com/whosonfirst/py-mapzen-whosonfirst-export/archive/v${PY_WOF_EXPORT_VERSION}.tar.gz && tar -xvzf export.tar.gz \
     && cd py-mapzen-whosonfirst-export-${PY_WOF_EXPORT_VERSION} \
-    && pip install -r requirements.txt . \
+    && pip3 install -r requirements.txt . \
     && cp -r scripts/. /usr/local/bin/ \
     #
     # wof-exportify-www.py is required by gunicorn
@@ -50,7 +39,7 @@ RUN apk update && apk upgrade \
     && cd /build \
     && wget -O exportify.tar.gz https://github.com/whosonfirst/whosonfirst-www-exportify/archive/v${WWW_WOF_EXPORTIFY_VERSION}.tar.gz && tar -xvzf exportify.tar.gz \
     && cd whosonfirst-www-exportify-${WWW_WOF_EXPORTIFY_VERSION} \
-    && pip install -r requirements.txt \
+    && pip3 install -r requirements.txt \
     && cp www/server.py /usr/local/bin/wof-exportify-www.py  \
     && ln -s /usr/local/bin/wof-exportify-www.py /usr/local/bin/wof-exportify-www \
     #
