@@ -4,7 +4,7 @@ FROM osgeo/gdal:alpine-normal-latest
 
 ARG PY_WOF_UTILS_VERSION=1.0.0
 ARG PY_WOF_EXPORT_VERSION=1.0.0
-ARG WWW_WOF_EXPORTIFY_VERSION=0.0.7
+ARG WWW_WOF_EXPORTIFY_VERSION=1.0.0
 
 RUN apk update && apk upgrade \
     && apk add git gcc libc-dev libffi-dev python3-dev ca-certificates py3-pip wget build-base \
