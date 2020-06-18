@@ -12,7 +12,6 @@ RUN apk update && apk upgrade \
     && pip3 install --upgrade pip \
     && pip3 install gevent \
     && pip3 install gunicorn \
-    # && pip3 install pygdal=="`gdal-config --version`.*" \
     #
     && mkdir /build \
     #
